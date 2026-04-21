@@ -38,4 +38,4 @@ app.post(/^\/([0-9]{4}-[0-9]{2})\.jsonl$/, (req, res) => {
     })
 });
 
-app.listen(3000);
+app.listen(3000, "http://localhost:3000 で起動したよー");

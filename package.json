@@ -6,6 +6,6 @@
     "sass": "^1.99.0"
   },
   "scripts": {
-    "start": "npx tsc && npx sass ./ && node main"
+    "start": "npm i && npx tsc && npx sass ./ && node main"
   }
 }
