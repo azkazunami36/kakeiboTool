@@ -1,0 +1,44 @@
+[
+    {
+        "no": 0,
+        "name": "家食費",
+        "alternativeName": "食費代替",
+        "memo": ""
+    },
+    {
+        "no": 1,
+        "name": "軽食",
+        "memo": ""
+    },
+    {
+        "no":2,
+        "name": "ドリンク",
+        "memo": ""
+    },
+    {
+        "no": 3,
+        "name": "外食",
+        "alternativeName": "外食代替"
+    },
+    {
+        "no": 4,
+        "name": "交通費"
+    },
+    {
+        "no": 5,
+        "name": "代替購入",
+        "alternativeName": "代替購入返却"
+    },
+    {
+        "no": 6,
+        "name": "雑費"
+    },
+    {
+        "no": 7,
+        "name": "一時出費"
+    },
+    {
+        "no": 8,
+        "name": "サブスク"
+    }
+]

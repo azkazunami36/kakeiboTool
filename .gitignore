@@ -1,0 +1,6 @@
+*.jsonl
+node_modules
+*.d.ts
+*.js
+package-lock.json
+*.css*

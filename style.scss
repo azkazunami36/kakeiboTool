@@ -1,0 +1,220 @@
+html,
+body {
+    margin: 0;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #d5d5d5;
+    position: fixed;
+    top:0;
+    left: 0;
+
+    input,
+    button {
+        height: 30px;
+    }
+
+    span {
+        margin: 5px;
+    }
+}
+
+main {
+    width: 100%;
+    margin-top: 50px;
+
+    #genreInfo {
+        display: flex;
+        flex-wrap: wrap;
+        background: linear-gradient(45deg, #6d9dd1, #d4e7ff);
+        border-radius: 10px;
+        margin: 10px;
+        padding: 5px;
+        width: calc(100% - 30px);
+
+        h2 {
+            display: flex;
+            align-items: center;
+            width: calc(100% - 10px);
+            height: 50px;
+            padding: 0;
+            padding-left: 10px;
+            margin: 0;
+            color: white;
+        }
+
+        .genreItem {
+            display: flex;
+            align-items: center;
+            width: calc(50% - 30px);
+            height: 35px;
+            background: #e5e5e5d5;
+            margin: 5px;
+            padding: 0 10px;
+            border-radius: 5px;
+            box-shadow:
+                inset 1px 1px 1px 0px white,
+                inset 1px 1px 1px 1px rgba(0, 0, 0, 0.716),
+                inset 1px -1px 1px 0px rgba(0, 0, 0, 0.379),
+                inset -1px -1px 2px 1px white;
+
+            .genreName {
+                font-weight: 900;
+            }
+
+            .value {
+                display: flex;
+                align-items: center;
+
+                .genreValue {
+                    background: #ffffff;
+                    border-radius: 5px;
+                    margin: 10px 5px;
+                    padding: 0 5px;
+                }
+
+                .typo {
+                    margin: 0;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    #datelist {
+        display: flex;
+        flex-wrap: wrap;
+        background: linear-gradient(45deg, #1c78db, #93c4ff);
+        border-radius: 10px;
+        margin: 10px;
+        padding: 5px;
+        width: calc(100% - 30px);
+
+        .dateitem {
+            width: calc(100% - 20px);
+            background: #ffffff2e;
+            border-radius: 10px;
+            margin: 10px;
+
+            .dateview {
+                h2 {
+                    display: flex;
+                    align-items: center;
+                    width: calc(100% - 10px);
+                    height: 50px;
+                    padding: 0;
+                    padding-left: 10px;
+                    margin: 0;
+                    color: white;
+                }
+            }
+
+            .itemlist {
+                margin: 5px 0;
+
+                .item,
+                .edititem {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: calc(100% - 10px);
+                    min-height: 30px;
+                    background: #ffffffa5;
+                    border-radius: 5px;
+                    margin: 5px;
+
+                    .left,
+                    .right {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .left {
+
+                        .price,
+                        .date {
+                            min-width: 60px;
+                        }
+
+                        .genre {
+                            min-width: 100px;
+                        }
+
+                        .date,
+                        .price,
+                        .genre {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 20px;
+                            padding: 5px;
+                        }
+                    }
+                }
+
+                .edititem {
+                    .left {
+                        input {
+                            border-width: 0;
+                            padding-block: 0;
+                            padding-inline: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#genreEditPopup {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #00000034;
+
+    .genreEditWindow {
+        background: linear-gradient(45deg, #6d9dd1, #d4e7ff);
+        margin: 10px;
+        padding: 5px;
+        min-width: 300px;
+        min-height: 300px;
+        border-radius: 15px;
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            p,
+            .close {
+                display: flex;
+                align-items: center;
+                height: 50px;
+                font-size: 1.5em;
+                padding: 0 10px;
+                margin: 0;
+                color: white;
+            }
+        }
+
+        .genrelist {
+            display: flex;
+            flex-wrap: wrap;
+            background: linear-gradient(45deg, #1c78db, #93c4ff);
+            border-radius: 10px;
+            margin: 10px;
+            padding: 5px;
+            width: calc(100% - 30px);
+        }
+    }
+}
