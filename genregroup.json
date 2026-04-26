@@ -1,0 +1,17 @@
+[
+    {
+        "name": "食費",
+        "groupGenreId": [
+            0,
+            1,
+            2,
+            3
+        ],
+        "idCalcType": 0
+    },
+    {
+        "name": "自分のみの出費",
+        "groupGenreId": [5],
+        "idCalcType": 1
+    }
+]

@@ -1,20 +1,21 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-
+import mime from "mime";
 const app = express();
 
-app.get("/", (req, res) => { res.end(fs.readFileSync("index.html")); });
-app.get("/index.html", (req, res) => { res.end(fs.readFileSync("index.html")); });
-app.get("/style.css", (req, res) => { res.end(fs.readFileSync("style.css")); });
-app.get("/script.js", (req, res) => { res.sendFile(path.resolve("./script.js")); });
-app.get("/genre.json", (req, res) => { res.end(fs.readFileSync("genre.json")); });
+app.get("/", (req, res) => { res.setHeader("Content-Type", "text/html; charset=utf-8");res.end(fs.readFileSync("index.html")); });
+app.get("/index.html", (req, res) =>{res.setHeader("Content-Type", "text/html;")});
+app.get("/style.css", ( req,res)=> {const type =mime.getType('s.css') as string;res.setHeader("Content-Type",type );res.end(fs.readFileSync("style.css")); });
+app.get("/script.js", (req, res) => { const type =mime.getType('s.js') as string;res.setHeader("Content-Type",type );res.sendFile(path.resolve("./script.js")); });
+app.get("/genre.json", (req, res) => { const type =mime.getType('s.json') as string;res.setHeader("Content-Type",type );res.end(fs.readFileSync("genre.json")); });
+app.get("/genregroup.json", (req, res) => { const type =mime.getType('s.json') as string;res.setHeader("Content-Type",type );res.end(fs.readFileSync("genregroup.json")); });
 app.get(/^\/([0-9]{4}-[0-9]{2})\.jsonl$/, (req, res) => {
     try {
         const data = fs.readFileSync(req.url.slice(1, req.url.length));
         res.end(data);
     } catch {
-        res.status(404);
+        res.sendStatus(404);
         res.end();
     }
 });
@@ -28,6 +29,15 @@ app.post("genre.json", (req, res) => {
         res.end();
     })
 });
+app.post("genregroup.json", (req, res) => {
+    let data = "";
+    req.on("data", chunk => { data += chunk; });
+    req.on("end", () => {
+        fs.writeFileSync("genregroup-writing.jsonl", data);
+        fs.renameSync("genregroup-writing.jsonl", "genregroup.jsonl");
+        res.end();
+    })
+});
 app.post(/^\/([0-9]{4}-[0-9]{2})\.jsonl$/, (req, res) => {
     let data = "";
     req.on("data", chunk => { data += chunk; });
@@ -38,4 +48,5 @@ app.post(/^\/([0-9]{4}-[0-9]{2})\.jsonl$/, (req, res) => {
     })
 });
 
-app.listen(3000, "http://localhost:3000 で起動したよー");
+app.listen(3050, ( )=> {console.log("http://localhost:3050 で起動したよー")});
+

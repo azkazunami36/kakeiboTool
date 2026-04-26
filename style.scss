@@ -11,7 +11,7 @@ header {
     height: 50px;
     background: #d5d5d5;
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
 
     input,
@@ -26,7 +26,7 @@ header {
 
 main {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 60px;
 
     #genreInfo {
         display: flex;
@@ -215,6 +215,56 @@ main {
             margin: 10px;
             padding: 5px;
             width: calc(100% - 30px);
+
+            .item,
+            .edititem {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: calc(100% - 10px);
+                min-height: 30px;
+                background: #ffffffa5;
+                border-radius: 5px;
+                margin: 5px;
+
+                .left,
+                .right {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .left {
+
+                    .price,
+                    .date {
+                        min-width: 60px;
+                    }
+
+                    .genre {
+                        min-width: 100px;
+                    }
+
+                    .date,
+                    .price,
+                    .genre {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 20px;
+                        padding: 5px;
+                    }
+                }
+            }
+
+            .edititem {
+                .left {
+                    input {
+                        border-width: 0;
+                        padding-block: 0;
+                        padding-inline: 0;
+                    }
+                }
+            }
         }
     }
 }

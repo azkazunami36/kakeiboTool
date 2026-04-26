@@ -17,6 +17,12 @@ interface Genre {
     memo: ""
 };
 
+interface GenreGroup {
+    name: string;
+    groupGenreId: number[];
+    idCalcType: 0 | 1;
+}
+
 /**
  * 現在位置を特定します。最初のうちはクラスが含まれているかを確認し、一番最後ではIDと照合します。一致したらtrueを返します。
  */
@@ -39,6 +45,7 @@ function getPosition(element: HTMLElement) {
 
 class Kakeibo {
     genre: Genre[] = [];
+    genreGroup: GenreGroup[] = [];
     /**
      * 現在扱っているデータです。DOMに表示されているものと完全同期する形です。refreshするたびに正常化する考えです。
      */
@@ -50,13 +57,16 @@ class Kakeibo {
                 const res = await fetch("genre.json");
                 const json = JSON.parse(await res.text());
                 this.genre = json;
+                const res2 = await fetch("genregroup.json");
+                const json2 = JSON.parse(await res2.text());
+                this.genreGroup = json2;
             } catch { }
             const yearel = document.getElementById("year") as HTMLInputElement;
             const monthel = document.getElementById("month") as HTMLInputElement;
             const ref = () => {
                 const year = Math.floor(Number(yearel.value));
                 const month = Math.floor(Number(monthel.value));
-                this.refreshView(year, month)
+                this.refreshView(year, month);
             }
             yearel.addEventListener("input", ref);
             monthel.addEventListener("input", ref);
@@ -202,7 +212,9 @@ class Kakeibo {
         }
         this.items = items;
         datelist.innerHTML = "";
+        let total = 0;
         const genreCalc: Record<string, { normal: number; alternative: number; }> = {};
+        const genreGroupCalc: Record<string, number> = {};
         for (const date of Object.keys(items)) {
             const item = items[date];
             const dateitem = this.createDateItem(Number(date));
@@ -212,7 +224,8 @@ class Kakeibo {
                 const genreno = String(itm.genreNo);
                 if (!genreCalc[genreno]) genreCalc[genreno] = { normal: 0, alternative: 0 };
                 if (itm.alternative) genreCalc[genreno].alternative += itm.price;
-                genreCalc[genreno].normal += itm.alternative ? -itm.price : itm.price
+                genreCalc[genreno].normal += itm.alternative ? -itm.price : itm.price;
+                total += itm.alternative ? -itm.price : itm.price;
             }
             datelist.appendChild(dateitem);
         }
@@ -227,7 +240,30 @@ class Kakeibo {
             if (alternative) alternative.innerText = String(genreprice.alternative);
             genreInfo.appendChild(item);
         }
-    document.body.scrollTo({top: scrollTop});
+
+        const genreGroupInfoTitle = document.createElement("h2");
+        genreGroupInfoTitle.innerText = "ジャンルグループの概要";
+        genreInfo.appendChild(genreGroupInfoTitle);
+        for (let i = 0; i < this.genreGroup.length; i++) {
+            const groupinfo = this.genreGroup[i];
+            genreGroupCalc[i] = 0;
+            for (const id of groupinfo.groupGenreId) {
+                if (genreCalc[id])
+                    genreGroupCalc[i] += genreCalc[id].normal;
+            }
+            const item = this.createGenreItem({ no: 0, name: groupinfo.name, memo: "" });
+            const normal = item.getElementsByClassName("genreValue")[0] as HTMLDivElement;
+            normal.innerText = String(groupinfo.idCalcType === 0 ? genreGroupCalc[i] : total - genreGroupCalc[i]);
+            genreInfo.appendChild(item);
+        }
+        const lastTitle = document.createElement("h2");
+        lastTitle.innerText = "システム概要";
+        genreInfo.appendChild(lastTitle);
+        const item = this.createGenreItem({ no: 0, name: "合計", memo: "" });
+        const normal = item.getElementsByClassName("genreValue")[0] as HTMLDivElement;
+        normal.innerText = String(total);
+        genreInfo.appendChild(item);
+        document.body.scrollTo({ top: scrollTop });
     }
 
     createDateItem(date: number) {
@@ -382,10 +418,43 @@ class GenreEditer {
     constructor(kakeibo: Kakeibo) {
         this.kakeibo = kakeibo;
         const genreEditPopup = document.getElementById("genreEditPopup") as HTMLDivElement;
+        const genreEdit = document.getElementById("genreEdit") as HTMLButtonElement;
         const close = genreEditPopup.getElementsByClassName("close")[0] as HTMLButtonElement;
         close.addEventListener("click", () => {
             genreEditPopup.style.display = "none";
+        });
+        genreEdit.addEventListener("click", () => {
+            genreEditPopup.style.display = "flex";
         })
+        addEventListener("keypress", e => {
+            switch (e.key.toLowerCase()) {
+                case "escape": {
+                    if (genreEditPopup.style.display !== "none") {
+                        genreEditPopup.style.display = "none";
+                    }
+                }
+            }
+        });
+    }
+    async saveGenreInfo() {
+        await fetch("genre.json", {
+            method: "post",
+            body: JSON.stringify(this.kakeibo.genre)
+        });
+        await fetch("genregroup.json", {
+            method: "post",
+            body: JSON.stringify(this.kakeibo.genreGroup)
+        });
+    }
+    async reloadGenreInfo() {
+        try {
+            const res = await fetch("genre.json");
+            const json = JSON.parse(await res.text());
+            this.kakeibo.genre = json;
+            const res2 = await fetch("genregroup.json");
+            const json2 = JSON.parse(await res2.text());
+            this.kakeibo.genreGroup = json2;
+        } catch { }
     }
 }
 
