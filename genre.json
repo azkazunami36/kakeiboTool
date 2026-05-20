@@ -16,6 +16,11 @@
         "memo": ""
     },
     {
+        "no": 10,
+        "name": "娯楽",
+        "alternativeName": "娯楽代替"
+    },
+    {
         "no": 3,
         "name": "外食",
         "alternativeName": "外食代替"
@@ -31,7 +36,8 @@
     },
     {
         "no": 6,
-        "name": "雑費"
+        "name": "雑費",
+        "alternativeName": "雑費代替"
     },
     {
         "no": 7,
@@ -40,5 +46,10 @@
     {
         "no": 8,
         "name": "サブスク"
+    },
+    {
+        "no": 9,
+        "name": "公共・税金",
+        "alternativeName": "公共等代替"
     }
 ]
